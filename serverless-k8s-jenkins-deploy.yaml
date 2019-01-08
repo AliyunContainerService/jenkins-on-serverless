@@ -46,4 +46,42 @@ spec:
       #  - name: jenkins-home
       #    nfs:
       #      path: /
-      #      server: 
+      #      server:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jenkins
+    component: jenkins-master
+  name: jenkins
+spec:
+  loadBalancerSourceRanges:
+  - 0.0.0.0/0
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    component: jenkins-master
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: jenkins
+    component: jenkins-master
+  name: jenkins-agent
+  annotations:
+    service.beta.kubernetes.io/alicloud-loadbalancer-address-type: intranet
+spec:
+  ports:
+  - name: slavelistener
+    port: 50000
+    protocol: TCP
+    targetPort: 50000
+  selector:
+    component: jenkins-master
+  type: LoadBalancer
