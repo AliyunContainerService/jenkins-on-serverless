@@ -21,7 +21,7 @@ spec:
         component: jenkins-master
     spec:
       containers:
-      - image: registry.cn-beijing.aliyuncs.com/acs-sample/jenkins-master-serverless:2.150.1
+      - image: registry.cn-beijing.aliyuncs.com/acs-sample/jenkins-master-serverless:2.156
         imagePullPolicy: Always
         name: jenkins
         ports:
