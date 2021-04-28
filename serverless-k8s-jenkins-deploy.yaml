@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -21,7 +21,7 @@ spec:
         component: jenkins-master
     spec:
       containers:
-      - image: registry.cn-hangzhou.aliyuncs.com/acs/jenkins-master-serverless:2.205
+      - image: registry.cn-hangzhou.aliyuncs.com/acs/jenkins-master-serverless:2.277
         imagePullPolicy: Always
         name: jenkins
         ports:
