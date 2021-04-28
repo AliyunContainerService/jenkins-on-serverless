@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
@@ -21,7 +21,7 @@ spec:
         component: jenkins-master
     spec:
       containers:
-      - image: registry.cn-hangzhou.aliyuncs.com/acs/jenkins-master-serverless:2.205
+      - image: registry.cn-hangzhou.aliyuncs.com/acs/jenkins-master:serverless-2.277
         imagePullPolicy: Always
         name: jenkins
         ports:
@@ -78,3 +78,26 @@ spec:
   selector:
     component: jenkins-master
   type: LoadBalancer
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: ack-jenkins-sa
+  name: ack-jenkins-sa-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: ack-jenkins-sa
+  namespace: default
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app: ack-jenkins-sa
+  name: ack-jenkins-sa
+  namespace: default
