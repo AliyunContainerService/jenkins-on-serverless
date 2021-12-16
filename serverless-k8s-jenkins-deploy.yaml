@@ -1,8 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    deployment.kubernetes.io/revision: "1"
   labels:
     component: jenkins-master
   name: jenkins
@@ -12,8 +10,6 @@ spec:
   selector:
     matchLabels:
       component: jenkins-master
-  strategy:
-    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -21,7 +17,7 @@ spec:
         component: jenkins-master
     spec:
       containers:
-      - image: registry.cn-hangzhou.aliyuncs.com/acs/jenkins-master:serverless-2.277
+      - image: jenkins/jenkins:2.319.1-lts-jdk11
         imagePullPolicy: Always
         name: jenkins
         ports:
